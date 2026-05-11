@@ -153,6 +153,7 @@ function ComparePage() {
               </table>
             </div>
           </div>
+        </div>
         )}
 
         <div className="mt-12 glass p-6 rounded-2xl flex items-center gap-4 animate-fade-in-up [animation-delay:400ms]">
