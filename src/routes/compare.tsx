@@ -5,12 +5,6 @@ import { supabase } from "@/lib/supabase";
 import { useQuery } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/compare")({
-  head: () => ({
-    meta: [
-      { title: "Comparison — Asia vs North America" },
-      { name: "description", content: "Side-by-side comparison of studying in Asia vs North America." },
-    ],
-  }),
   component: ComparePage,
 });
 

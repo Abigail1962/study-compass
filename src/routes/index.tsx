@@ -3,16 +3,6 @@ import { SiteNav } from "@/components/SiteNav";
 import { ArrowRight, Calculator } from "lucide-react";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Study Compass — Asia vs North America" },
-      {
-        name: "description",
-        content:
-          "Compare studying in Asia and North America by cost, academics, career opportunities, and lifestyle. Free cost calculator included.",
-      },
-    ],
-  }),
   component: Index,
 });
 

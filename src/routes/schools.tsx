@@ -6,12 +6,6 @@ import { supabase } from "@/lib/supabase";
 import { useQuery } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/schools")({
-  head: () => ({
-    meta: [
-      { title: "Universities — Asia & North America" },
-      { name: "description", content: "Browse top universities in Asia and North America." },
-    ],
-  }),
   component: SchoolsPage,
 });
 

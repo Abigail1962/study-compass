@@ -3,12 +3,6 @@ import { useState } from "react";
 import { SiteNav } from "@/components/SiteNav";
 
 export const Route = createFileRoute("/calculator")({
-  head: () => ({
-    meta: [
-      { title: "Study Cost Calculator — Asia vs North America" },
-      { name: "description", content: "Estimate your annual and total study costs." },
-    ],
-  }),
   component: CalculatorPage,
 });
 
