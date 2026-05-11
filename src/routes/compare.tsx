@@ -3,6 +3,26 @@ import { SiteNav } from "@/components/SiteNav";
 import { CheckCircle2, Info, Loader2 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { useQuery } from "@tanstack/react-query";
+import { Sparkles } from "lucide-react";
+import { 
+  BarChart, 
+  Bar, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip as RechartsTooltip, 
+  ResponsiveContainer, 
+  Legend 
+} from 'recharts';
+
+// Map string values to numeric scores for the chart
+const scoreValue = (val: string) => {
+  const v = val.toLowerCase();
+  if (v.includes("high") || v.includes("expensive") || v.includes("top")) return 90;
+  if (v.includes("moderate") || v.includes("medium")) return 60;
+  if (v.includes("low") || v.includes("affordable")) return 30;
+  return 50;
+};
 
 export const Route = createFileRoute("/compare")({
   component: ComparePage,
@@ -30,6 +50,12 @@ function ComparePage() {
     }
   });
 
+  const chartData = rows?.map(r => ({
+    name: r.factor,
+    Asia: scoreValue(r.asia_value),
+    "North America": scoreValue(r.na_value)
+  })) || [];
+
   return (
     <div className="min-h-screen bg-background mesh-gradient">
       <SiteNav />
@@ -54,7 +80,43 @@ function ComparePage() {
             <p className="text-muted-foreground text-sm">Please check your Supabase connection and .env file.</p>
           </div>
         ) : (
-          <div className="glass rounded-3xl overflow-hidden shadow-2xl animate-fade-in-up [animation-delay:200ms]">
+          <div className="space-y-12 animate-fade-in-up [animation-delay:200ms]">
+            {/* Visual Comparison Chart */}
+            <div className="glass rounded-3xl p-8 shadow-xl border border-white/20">
+              <h3 className="text-xl font-bold mb-8 flex items-center gap-2">
+                <Sparkles className="h-5 w-5 text-primary" />
+                Visual Comparison Index
+              </h3>
+              <div className="h-[400px] w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" vertical={false} />
+                    <XAxis 
+                      dataKey="name" 
+                      axisLine={false} 
+                      tickLine={false} 
+                      tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 11 }} 
+                    />
+                    <YAxis hide />
+                    <RechartsTooltip 
+                      cursor={{ fill: 'rgba(255,255,255,0.05)' }}
+                      contentStyle={{ 
+                        backgroundColor: 'rgba(255,255,255,0.8)', 
+                        backdropFilter: 'blur(10px)',
+                        borderRadius: '16px',
+                        border: '1px solid rgba(255,255,255,0.2)',
+                        boxShadow: '0 10px 30px rgba(0,0,0,0.1)'
+                      }}
+                    />
+                    <Legend iconType="circle" />
+                    <Bar name="Asia" dataKey="Asia" fill="hsl(var(--primary))" radius={[6, 6, 0, 0]} barSize={40} />
+                    <Bar name="North America" dataKey="North America" fill="hsl(var(--accent))" radius={[6, 6, 0, 0]} barSize={40} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            <div className="glass rounded-3xl overflow-hidden shadow-2xl">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
