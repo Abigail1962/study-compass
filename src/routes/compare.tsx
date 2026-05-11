@@ -16,11 +16,23 @@ import {
 } from 'recharts';
 
 // Map string values to numeric scores for the chart
-const scoreValue = (val: string) => {
+// Refined scoring logic for more dynamic ratios
+const scoreValue = (val: string, factor: string) => {
   const v = val.toLowerCase();
-  if (v.includes("high") || v.includes("expensive") || v.includes("top")) return 90;
-  if (v.includes("moderate") || v.includes("medium")) return 60;
-  if (v.includes("low") || v.includes("affordable")) return 30;
+  const f = factor.toLowerCase();
+  
+  // Cost factors (higher index = more expensive)
+  if (f.includes("tuition") || f.includes("cost") || f.includes("lifestyle")) {
+    if (v.includes("high") || v.includes("expensive")) return 85;
+    if (v.includes("moderate") || v.includes("medium")) return 45;
+    if (v.includes("low") || v.includes("affordable")) return 20;
+  }
+  
+  // Quality/Opportunity factors
+  if (v.includes("high") || v.includes("top") || v.includes("global") || v.includes("diverse")) return 90;
+  if (v.includes("moderate") || v.includes("emerging") || v.includes("good")) return 55;
+  if (v.includes("limited") || v.includes("developing")) return 35;
+  
   return 50;
 };
 
@@ -52,8 +64,8 @@ function ComparePage() {
 
   const chartData = rows?.map(r => ({
     name: r.factor,
-    Asia: scoreValue(r.asia_value),
-    "North America": scoreValue(r.na_value)
+    Asia: scoreValue(r.asia_value, r.factor),
+    "North America": scoreValue(r.na_value, r.factor)
   })) || [];
 
   return (
@@ -108,9 +120,10 @@ function ComparePage() {
                         boxShadow: '0 10px 30px rgba(0,0,0,0.1)'
                       }}
                     />
-                    <Legend iconType="circle" />
-                    <Bar name="Asia" dataKey="Asia" fill="hsl(var(--primary))" radius={[6, 6, 0, 0]} barSize={40} />
-                    <Bar name="North America" dataKey="North America" fill="hsl(var(--accent))" radius={[6, 6, 0, 0]} barSize={40} />
+                    <Legend iconType="circle" wrapperStyle={{ paddingTop: '25px' }} />
+                    {/* Explicit High-Contrast Colors */}
+                    <Bar name="Asia" dataKey="Asia" fill="#4f46e5" radius={[6, 6, 0, 0]} barSize={35} />
+                    <Bar name="North America" dataKey="North America" fill="#f59e0b" radius={[6, 6, 0, 0]} barSize={35} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
