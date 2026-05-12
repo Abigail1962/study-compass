@@ -153,7 +153,7 @@ function SchoolsPage() {
         rating: reviewForm.rating,
         review_text: reviewForm.review_text,
         career_outcome: reviewForm.career_outcome || null,
-        is_approved: false,
+        is_approved: true,
       });
       if (error) throw error;
     },
@@ -475,7 +475,7 @@ function SchoolsPage() {
                 {reviewSubmitted && (
                   <div className="flex items-center gap-2 p-4 rounded-xl bg-green-500/10 border border-green-500/20 text-green-600 text-sm font-medium mb-4">
                     <CheckCircle className="h-4 w-4 flex-shrink-0" />
-                    Review submitted! It will appear after admin approval.
+                    Review submitted! Thank you for sharing your experience.
                   </div>
                 )}
 
