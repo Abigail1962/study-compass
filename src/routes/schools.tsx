@@ -243,8 +243,8 @@ function SchoolsPage() {
                 <div className="relative h-48 overflow-hidden">
                   <img
                     src={
-                      s.image_url ||
                       schoolImages[s.name] ||
+                      s.image_url ||
                       "https://images.unsplash.com/photo-1541339907198-e08756ebafe1?auto=format&fit=crop&q=80"
                     }
                     alt={s.name}
@@ -329,8 +329,8 @@ function SchoolsPage() {
             <div className="h-60 relative flex-shrink-0">
               <img
                 src={
-                  selectedSchool.image_url ||
                   schoolImages[selectedSchool.name] ||
+                  selectedSchool.image_url ||
                   "https://images.unsplash.com/photo-1541339907198-e08756ebafe1?auto=format&fit=crop&q=80"
                 }
                 alt={selectedSchool.name}
