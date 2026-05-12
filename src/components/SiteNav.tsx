@@ -50,7 +50,7 @@ export function SiteNav() {
           <Link to="/calculator" className={linkCls} activeProps={{ className: activeCls }}>
             Calculator
           </Link>
-          {user && (
+          {user?.email === 'abigailjoek@gmail.com' && (
             <Link to="/admin" className={linkCls} activeProps={{ className: activeCls }}>
               Admin
             </Link>

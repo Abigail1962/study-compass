@@ -10,6 +10,8 @@ export const Route = createFileRoute('/admin')({
   component: AdminPage,
 });
 
+const ADMIN_EMAIL = 'abigailjoek@gmail.com';
+
 type School = {
   id: number;
   name: string;
@@ -67,7 +69,7 @@ function AdminPage() {
     );
   }
 
-  if (!session) {
+  if (!session || session.user.email !== ADMIN_EMAIL) {
     return (
       <div className="min-h-screen bg-background mesh-gradient flex flex-col">
         <SiteNav />
@@ -77,14 +79,18 @@ function AdminPage() {
           </div>
           <h1 className="text-3xl font-bold text-foreground">Access Denied</h1>
           <p className="text-muted-foreground max-w-sm">
-            You need to be logged in to access the admin dashboard.
+            {!session
+              ? 'You need to be logged in to access the admin dashboard.'
+              : 'This page is restricted to administrators only.'}
           </p>
-          <Link
-            to="/login"
-            className="bg-primary text-primary-foreground px-8 py-3 rounded-2xl font-bold hover:opacity-90 transition-opacity"
-          >
-            Log In
-          </Link>
+          {!session && (
+            <Link
+              to="/login"
+              className="bg-primary text-primary-foreground px-8 py-3 rounded-2xl font-bold hover:opacity-90 transition-opacity"
+            >
+              Log In
+            </Link>
+          )}
         </div>
       </div>
     );
