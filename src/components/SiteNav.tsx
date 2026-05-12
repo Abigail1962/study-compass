@@ -50,9 +50,11 @@ export function SiteNav() {
           <Link to="/calculator" className={linkCls} activeProps={{ className: activeCls }}>
             Calculator
           </Link>
-          <Link to="/admin" className={linkCls} activeProps={{ className: activeCls }}>
-            Admin
-          </Link>
+          {user && (
+            <Link to="/admin" className={linkCls} activeProps={{ className: activeCls }}>
+              Admin
+            </Link>
+          )}
 
           <div className="h-4 w-px bg-white/20 ml-4 mr-2" />
 

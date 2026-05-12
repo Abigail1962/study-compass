@@ -57,6 +57,17 @@ const BLANK_FORM: ReviewForm = {
   career_outcome: "",
 };
 
+const schoolImages: Record<string, string> = {
+  HKU: 'https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?auto=format&fit=crop&q=80&w=800',
+  HKUST: 'https://images.unsplash.com/photo-1526481280693-3bfa7568e0f3?auto=format&fit=crop&q=80&w=800',
+  NUS: 'https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&q=80&w=800',
+  NTU: 'https://images.unsplash.com/photo-1550353175-a3611868086b?auto=format&fit=crop&q=80&w=800',
+  'University of Waterloo': 'https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&q=80&w=800',
+  UBC: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&q=80&w=800',
+  'University of Toronto': 'https://images.unsplash.com/photo-1569012871812-f38ee64cd54c?auto=format&fit=crop&q=80&w=800',
+  McGill: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&q=80&w=800',
+};
+
 const schoolDescriptions: Record<string, string> = {
   HKUST:
     "Hong Kong University of Science and Technology is a world-class research university known for its entrepreneurial culture and strong industry ties. Perched above Clear Water Bay with panoramic sea views, HKUST offers a vibrant international community and has incubated some of Asia's most successful tech startups.",
@@ -230,6 +241,7 @@ function SchoolsPage() {
                   <img
                     src={
                       s.image_url ||
+                      schoolImages[s.name] ||
                       "https://images.unsplash.com/photo-1541339907198-e08756ebafe1?auto=format&fit=crop&q=80"
                     }
                     alt={s.name}
@@ -315,6 +327,7 @@ function SchoolsPage() {
               <img
                 src={
                   selectedSchool.image_url ||
+                  schoolImages[selectedSchool.name] ||
                   "https://images.unsplash.com/photo-1541339907198-e08756ebafe1?auto=format&fit=crop&q=80"
                 }
                 alt={selectedSchool.name}

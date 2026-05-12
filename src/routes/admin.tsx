@@ -1,9 +1,10 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { supabase } from '@/lib/supabase';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { SiteNav } from '@/components/SiteNav';
-import { Plus, Pencil, Trash2, Loader2, Save, X, Star, CheckCircle, MessageSquare } from 'lucide-react';
-import { useState } from 'react';
+import { Plus, Pencil, Trash2, Loader2, Save, X, Star, CheckCircle, MessageSquare, ShieldOff } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import type { Session } from '@supabase/supabase-js';
 
 export const Route = createFileRoute('/admin')({
   component: AdminPage,
@@ -50,6 +51,44 @@ function StarRow({ rating }: { rating: number }) {
 function AdminPage() {
   const queryClient = useQueryClient();
   const [tab, setTab] = useState<Tab>('schools');
+  const [session, setSession] = useState<Session | null | undefined>(undefined);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => setSession(session));
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, s) => setSession(s));
+    return () => subscription.unsubscribe();
+  }, []);
+
+  if (session === undefined) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if (!session) {
+    return (
+      <div className="min-h-screen bg-background mesh-gradient flex flex-col">
+        <SiteNav />
+        <div className="flex-1 flex flex-col items-center justify-center gap-6 text-center px-6">
+          <div className="w-20 h-20 rounded-3xl bg-destructive/10 flex items-center justify-center">
+            <ShieldOff className="h-10 w-10 text-destructive" />
+          </div>
+          <h1 className="text-3xl font-bold text-foreground">Access Denied</h1>
+          <p className="text-muted-foreground max-w-sm">
+            You need to be logged in to access the admin dashboard.
+          </p>
+          <Link
+            to="/login"
+            className="bg-primary text-primary-foreground px-8 py-3 rounded-2xl font-bold hover:opacity-90 transition-opacity"
+          >
+            Log In
+          </Link>
+        </div>
+      </div>
+    );
+  }
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editForm, setEditForm] = useState<Partial<School>>({});
   const [isAdding, setIsAdding] = useState(false);
