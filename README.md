@@ -49,7 +49,7 @@ study-compass/
 
 ### Home Page
 
-![Home](assets/home.png)
+![Home](home.png)
 
 ### University Comparison
 
