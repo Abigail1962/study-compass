@@ -57,7 +57,7 @@ study-compass/
 
 ### Login Page
 
-![Login](assets/login.png)
+![Login](login.png)
 
 ## Getting Started
 
