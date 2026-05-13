@@ -53,7 +53,7 @@ study-compass/
 
 ### University Comparison
 
-![Compare](assets/compare.png)
+![Compare](school-compare.png)
 
 ### Login Page
 
